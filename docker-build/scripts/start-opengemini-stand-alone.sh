@@ -10,6 +10,15 @@ echo '[meta]' >> $CONF_FILE
 echo '  bind-address = "127.0.0.1:8088"' >> $CONF_FILE
 echo '  http-bind-address = "127.0.0.1:8091"' >> $CONF_FILE
 echo '  rpc-bind-address = "127.0.0.1:8092"' >> $CONF_FILE
+if [ $META_HTTPS_ENABLE == "true" ]; then
+  echo '  https-enabled = true' >> $CONF_FILE
+  if [ -z $HTTPS_CERTIFICATE ]; then
+    echo '  https-certificate = "'$HTTPS_CERTIFICATE'"' >> $CONF_FILE
+  fi
+  if [ -z $HTTPS_PRIVATE_KEY ]; then
+    echo '  https-private-key = "'$HTTPS_PRIVATE_KEY'"' >> $CONF_FILE
+  fi
+fi
 
 echo -n '  dir = "' >> $CONF_FILE
 echo -n "$OPENGEMINI_HOME/meta" >> $CONF_FILE
@@ -17,6 +26,15 @@ echo '"' >> $CONF_FILE
 
 echo '[http]' >> $CONF_FILE
 echo '  bind-address = "0.0.0.0:8086"' >> $CONF_FILE
+if [ $HTTPS_ENABLE == "true" ]; then
+  echo '  https-enabled = true' >> $CONF_FILE
+  if [ -z $HTTPS_CERTIFICATE ]; then
+    echo '  https-certificate = "'$HTTPS_CERTIFICATE'"' >> $CONF_FILE
+  fi
+  if [ -z $HTTPS_PRIVATE_KEY ]; then
+    echo '  https-private-key = "'$HTTPS_PRIVATE_KEY'"' >> $CONF_FILE
+  fi
+fi
 
 echo '[data]' >> $CONF_FILE
 echo '  store-ingest-addr = "127.0.0.1:8400"' >> $CONF_FILE
